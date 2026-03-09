@@ -23,9 +23,64 @@ This is a queuing model in which the arrival is Marcovian and departure distribu
 
  
 ## Program
-![image](https://github.com/ramjan1729/Single-server-infinite-capacity---Markov-Model/assets/103921593/5f1fd58d-5929-4c51-89ea-4cef009e5bad)
+```
+import numpy as np
+import math
+import scipy.stats
+
+L = [int(i) for i in input().split()]
+N = len(L)
+M = max(L)
+X = []
+f = []
+
+for i in range(M + 1):
+    c = 0
+    for j in range(N):
+        if L[j] == i:
+            c = c + 1
+    f.append(c)
+    X.append(i)
+
+sf = np.sum(f)
+p_observed = []
+
+for i in range(M + 1):
+    p_observed.append(f[i] / sf)
+
+mean = np.inner(X, p_observed)
+
+p = []
+E = []
+xi = []
+
+print("X   P(X=x)   Obs.Fr   Exp.Fr   xi")
+print("--------------------------")
+
+for x in range(M + 1):
+    p.append(math.exp(-mean) * mean**x / math.factorial(x))
+    E.append(p[x] * sf)
+    xi.append((f[x] - E[x])**2 / E[x])
+    print("%2.2f %2.3f %4.2f %3.2f %3.2f" % (x, p[x], f[x], E[x], xi[x]))
+
+print("-------------------")
+
+cal_chi2_sq = np.sum(xi)
+print("Calculated value of chi square is %4.2f" % cal_chi2_sq)
+
+table_chi2 = scipy.stats.chi2.ppf(1 - .01, df=M)
+print("Table value of chi square at 1 level is %4.2f" % table_chi2)
+
+if cal_chi2_sq < table_chi2:
+    print("The given data can be fitted in poisson distribution at 1% LOS")
+else:
+    print("The given data cannot be fitted in poisson distribution at 1% LOS")
+```
 
 ## Output :
+<img width="809" height="352" alt="Screenshot 2026-03-09 102651" src="https://github.com/user-attachments/assets/2cef112e-f88e-4bca-874d-5002c1662ead" />
+
 
 ## Result :
+The average number of material in the system and in the conveyor and waiting time are successfully found.
 
