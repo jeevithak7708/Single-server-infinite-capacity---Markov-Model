@@ -45,14 +45,9 @@ if (lam < mu):
     print("Probability that the system is empty: %0.2f" % (1 - lam/mu))
 else:
     print("\nWarning! Objects overflow will happen in the conveyer")
-
-
 ```
-
-
 ## Output :
 <img width="809" height="352" alt="Screenshot 2026-03-09 102651" src="https://github.com/user-attachments/assets/2cef112e-f88e-4bca-874d-5002c1662ead" />
-
 
 ## Result :
 The average number of material in the system and in the conveyor and waiting time are successfully found.
